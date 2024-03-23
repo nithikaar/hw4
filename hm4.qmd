@@ -1,11 +1,11 @@
 ---
 title: "Homework 4"
-author: "[Insert your name here]{style='background-color: yellow;'}"
+author: "Nithika Radhakrishnan"
 toc: true
 title-block-banner: true
 title-block-style: default
-format: html
-# format: pdf
+#format: html
+format: pdf
 ---
 
 ---
@@ -150,24 +150,24 @@ and evaluate $f'(z_0)$ when $z_0 = -3.5$.
 Define $f(z)$ as a function in R, and using the `torch` library compute $f'(-3.5)$. 
 ```{R}
 
-# Step 1: Load the torch library
+
 library(torch)
 
-vector_u <- torch_tensor(c(-1, 1, -1, 1, -1, 1, -1, 1, -1, 1), dtype = torch_float32, requires_grad = TRUE)
-vector_v <- torch_tensor(c(-1, -1, -1, -1, -1, 1, 1, 1, 1, 1), dtype = torch_float32)
+#vector_u <- torch_tensor(c(-1, 1, -1, 1, -1, 1, -1, 1, -1, 1), dtype = torch_float32, requires_grad = TRUE)
+#vector_v <- torch_tensor(c(-1, -1, -1, -1, -1, 1, 1, 1, 1, 1), dtype = torch_float32)
 
 # Step 3: Define the function h that computes (u dot v)^3
 calculate_h <- function(u, v) {
   (torch_dot(u, v))^3
 }
 
-# Step 4: Compute h using the vectors u and v
+
 h_result <- calculate_h(vector_u, vector_v)
 
-# Step 5: Compute the gradient of h with respect to u
+
 h_result$backward()
 
-# Step 6: Access and print the gradient of h with respect to u
+
 gradient_with_respect_to_u <- vector_u$grad
 print(paste("Gradient of h with respect to u:", gradient_with_respect_to_u))
 
