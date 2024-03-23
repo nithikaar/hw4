@@ -105,9 +105,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#question-1" id="toc-question-1" class="nav-link active" data-scroll-target="#question-1">Question 1</a></li>
+  <li><a href="#define-the-function-gx-y" id="toc-define-the-function-gx-y" class="nav-link" data-scroll-target="#define-the-function-gx-y">Define the function g(x, y)</a></li>
+  <li><a href="#define-the-partial-derivatives-of-g-with-respect-to-x-and-y" id="toc-define-the-partial-derivatives-of-g-with-respect-to-x-and-y" class="nav-link" data-scroll-target="#define-the-partial-derivatives-of-g-with-respect-to-x-and-y">Define the partial derivatives of g with respect to x and y</a></li>
+  <li><a href="#compute-the-gradient-at-x-3-and-y-4" id="toc-compute-the-gradient-at-x-3-and-y-4" class="nav-link" data-scroll-target="#compute-the-gradient-at-x-3-and-y-4">Compute the gradient at x = 3 and y = 4</a></li>
+  <li><a href="#print-the-result" id="toc-print-the-result" class="nav-link" data-scroll-target="#print-the-result">Print the result</a>
+  <ul class="collapse">
   <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -176,15 +182,27 @@ Important
 g(x, y) = (x - 3)^2 + (y - 4)^2.
 \]</span></p>
 <p>Using elementary calculus derive the expressions for</p>
-<p><span class="math display">\[
-\frac{d}{dx}g(x, y), \quad \text{and} \quad \frac{d}{dy}g(x, y).
-\]</span></p>
-<p>Using your answer from above, what is the answer to <span class="math display">\[
-\frac{d}{dx}g(x, y) \Bigg|_{(x=3, y=4)} \quad \text{and} \quad \frac{d}{dy}g(x, y) \Bigg|_{(x=3, y=4)} ?
-\]</span></p>
+<p>$$ g(x, y), g(x, y).</p>
+</section>
+</section>
+<section id="define-the-function-gx-y" class="level1">
+<h1>Define the function g(x, y)</h1>
+<p>g &lt;- function(x, y) { (x - 3)^2 + (y - 4)^2 }</p>
+</section>
+<section id="define-the-partial-derivatives-of-g-with-respect-to-x-and-y" class="level1">
+<h1>Define the partial derivatives of g with respect to x and y</h1>
+<p>grad_g &lt;- function(x, y) { grad_x = 2 * (x - 3) grad_y = 2 * (y - 4) return(c(grad_x, grad_y)) } $$</p>
+<p>Using your answer from above, what is the answer to $$ g(x, y) |<em>{(x=3, y=4)} g(x, y) |</em>{(x=3, y=4)} ?</p>
+</section>
+<section id="compute-the-gradient-at-x-3-and-y-4" class="level1">
+<h1>Compute the gradient at x = 3 and y = 4</h1>
+<p>gradient_at_3_4 &lt;- grad_g(3, 4)</p>
+</section>
+<section id="print-the-result" class="level1">
+<h1>Print the result</h1>
+<p>print(gradient_at_3_4) $$</p>
 <p>Define <span class="math inline">\(g(x, y)\)</span> as a function in R, compute the gradient of <span class="math inline">\(g(x, y)\)</span> with respect to <span class="math inline">\(x=3\)</span> and <span class="math inline">\(y=4\)</span>. Does the answer match what you expected?</p>
 <hr>
-</section>
 <section id="points-2" class="level6">
 <h6 class="anchored" data-anchor-id="points-2">1.2 (10 points)</h6>
 <p><span class="math display">\[\newcommand{\u}{\boldsymbol{u}}\newcommand{\v}{\boldsymbol{v}}\]</span></p>
@@ -232,7 +250,6 @@ f'(z_0) = \frac{df}{dz}\Bigg|_{z=z_0}
 <p>Redo the same analysis as <strong>Question 1.4</strong>, but this time using <span class="math inline">\(\eta = 0.03\)</span>. What do you observe? What can you conclude from this analysis</p>
 <p><br><br><br><br> <br><br><br><br></p>
 <hr>
-</section>
 </section>
 <section id="question-2" class="level2">
 <h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
@@ -509,6 +526,7 @@ loaded via a namespace (and not attached):
 </div>
 </div>
 </div>
+</section>
 </section>
 </section>
 
