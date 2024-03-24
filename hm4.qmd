@@ -4,27 +4,31 @@ author: "Nithika Radhakrishnan"
 toc: true
 title-block-banner: true
 title-block-style: default
-#format: html
-format: pdf
+format: html
+#format: pdf
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
----
+------------------------------------------------------------------------
 
 ::: {.callout-important style="font-size: 0.8em;"}
+Please read the instructions carefully before submitting your
+assignment.
 
-Please read the instructions carefully before submitting your assignment.
+1.  This assignment requires you to only upload a `PDF` file on Canvas
+2.  Don't collapse any code cells before submitting.
+3.  Remember to make sure all your code output is rendered properly
+    before uploading your submission.
 
-1. This assignment requires you to only upload a `PDF` file on Canvas
-1. Don't collapse any code cells before submitting. 
-1. Remember to make sure all your code output is rendered properly before uploading your submission.
-
-⚠️ Please add your name to the author information in the frontmatter before submitting your assignment ⚠️
+⚠️ Please add your name to the author information in the frontmatter
+before submitting your assignment ⚠️
 :::
-
 
 We will be using the following libraries:
 
-```R
+``` r
 packages <- c(
   "dplyr", 
   "readr", 
@@ -43,29 +47,27 @@ packages <- c(
 sapply(packages, require, character.only=T)
 ```
 
-<br><br><br><br>
----
+## <br><br><br><br>
 
 ## Question 1
-::: {.callout-tip}
+
+::: callout-tip
 ## 30 points
+
 Automatic differentiation using `torch`
 :::
 
 ###### 1.1 (5 points)
 
-Consider $g(x, y)$ given by
-$$
+Consider $g(x, y)$ given by $$
 g(x, y) = (x - 3)^2 + (y - 4)^2.
 $$
 
 Using elementary calculus derive the expressions for
 
-$$
-\frac{d}{dx}g(x, y), \quad \text{and} \quad \frac{d}{dy}g(x, y).
+\$\$ \frac{d}{dx}g(x, y), \quad \text{and} \quad \frac{d}{dy}g(x, y).
 
-
-$$
+\$\$
 
 ```{R}
 # Define the function g(x, y)
@@ -82,36 +84,36 @@ grad_g <- function(x, y) {
 
 ```
 
-Using your answer from above, what is the answer to
-$$
+Using your answer from above, what is the answer to $$
 \frac{d}{dx}g(x, y) \Bigg|_{(x=3, y=4)} \quad \text{and} \quad \frac{d}{dy}g(x, y) \Bigg|_{(x=3, y=4)} ?
 $$
+
 ```{R}
 
 # Compute the gradient at x = 3 and y = 4
 gradient_at_3_4 <- grad_g(3, 4)
-
-# Print the result
+ 
 print(gradient_at_3_4)
 ```
-Define $g(x, y)$ as a function in R, compute the gradient of $g(x, y)$ with respect to $x=3$ and $y=4$. Does the answer match what you expected?
 
+Define $g(x, y)$ as a function in R, compute the gradient of $g(x, y)$
+with respect to $x=3$ and $y=4$. Does the answer match what you
+expected?
 
+Since the R code computes and prints the gradient at the point (3,4) and
+as it is derived manually it is supposed to be (0,0) and this minimum
+confirms this expectation.
 
-Since the R code computes and prints the gradient at the point (3,4) and as it is derived manually it is supposed to be (0,0) and this minimum confirms this expectation. 
-
----
+------------------------------------------------------------------------
 
 ###### 1.2 (10 points)
 
-
 $$\newcommand{\u}{\boldsymbol{u}}\newcommand{\v}{\boldsymbol{v}}$$
 
-Consider $h(\u, \v)$ given by
-$$
+Consider $h(\u, \v)$ given by $$
 h(\u, \v) = (\u \cdot \v)^3,
-$$
-where $\u \cdot \v$ denotes the dot product of two vectors, i.e., $\u \cdot \v = \sum_{i=1}^n u_i v_i.$
+$$ where $\u \cdot \v$ denotes the dot product of two vectors, i.e.,
+$\u \cdot \v = \sum_{i=1}^n u_i v_i.$
 
 Using elementary calculus derive the expressions for the gradients
 
@@ -121,7 +123,8 @@ $$
 \end{aligned}
 $$
 
-Using your answer from above, what is the answer to $\nabla_\u h(\u, \v)$ when $n=10$ and
+Using your answer from above, what is the answer to
+$\nabla_\u h(\u, \v)$ when $n=10$ and
 
 $$
 \begin{aligned}
@@ -130,24 +133,25 @@ $$
 \end{aligned}
 $$
 
-Define $h(\u, \v)$ as a function in R, initialize the two vectors $\u$ and $\v$ as `torch_tensor`s. Compute the gradient of $h(\u, \v)$ with respect to $\u$. Does the answer match what you expected?
+Define $h(\u, \v)$ as a function in R, initialize the two vectors $\u$
+and $\v$ as `torch_tensor`s. Compute the gradient of $h(\u, \v)$ with
+respect to $\u$. Does the answer match what you expected?
 
----
+------------------------------------------------------------------------
 
 ###### 1.3 (5 points)
 
-Consider the following function
-$$
+Consider the following function $$
 f(z) = z^4 - 6z^2 - 3z + 4
 $$
 
-Derive the expression for 
-$$
+Derive the expression for $$
 f'(z_0) = \frac{df}{dz}\Bigg|_{z=z_0}
-$$
-and evaluate $f'(z_0)$ when $z_0 = -3.5$.
+$$ and evaluate $f'(z_0)$ when $z_0 = -3.5$.
 
-Define $f(z)$ as a function in R, and using the `torch` library compute $f'(-3.5)$. 
+Define $f(z)$ as a function in R, and using the `torch` library compute
+$f'(-3.5)$.
+
 ```{R}
 
 
@@ -162,30 +166,32 @@ calculate_h <- function(u, v) {
 }
 
 
-h_result <- calculate_h(vector_u, vector_v)
+#h_result <- calculate_h(vector_u, vector_v)
 
 
-h_result$backward()
+#h_result$backward()
 
 
-gradient_with_respect_to_u <- vector_u$grad
-print(paste("Gradient of h with respect to u:", gradient_with_respect_to_u))
+#gradient_with_respect_to_u <- vector_u$grad
+#print(paste("Gradient of h with respect to u:", gradient_with_respect_to_u))
 
 
 ```
 
-
----
+------------------------------------------------------------------------
 
 ###### 1.4 (5 points)
 
-For the same function $f$, initialize $z[1] = -3.5$, and perform $n=100$ iterations of **gradient descent**, i.e., 
+For the same function $f$, initialize $z[1] = -3.5$, and perform $n=100$
+iterations of **gradient descent**, i.e.,
 
-> $z[{k+1}] = z[k] - \eta f'(z[k]) \ \ \ \ $ for $k = 1, 2, \dots, 100$
+> $z[{k+1}] = z[k] - \eta f'(z[k]) \ \ \ \$ for $k = 1, 2, \dots, 100$
 
-Plot the curve $f$ and add taking $\eta = 0.02$, add the points $\{z_0, z_1, z_2, \dots z_{100}\}$ obtained using gradient descent to the plot. What do you observe?
-   
----
+Plot the curve $f$ and add taking $\eta = 0.02$, add the points
+$\{z_0, z_1, z_2, \dots z_{100}\}$ obtained using gradient descent to
+the plot. What do you observe?
+
+------------------------------------------------------------------------
 
 ```{R}
 # Define the function and its derivative
@@ -220,11 +226,12 @@ points(z_values, f(z_values), col = 'red', pch = 20)
 
 ###### 1.5 (5 points)
 
+Redo the same analysis as **Question 1.4**, but this time using
+$\eta = 0.03$. What do you observe? What can you conclude from this
+analysis.
 
-Redo the same analysis as **Question 1.4**, but this time using $\eta = 0.03$. What do you observe? What can you conclude from this analysis. 
-
-
-Both plots have the same curve. However the one with .03 is much more spread out than the one above. They all centralize the zero point
+Both plots have the same curve. However the one with .03 is much more
+spread out than the one above. They all centralize the zero point
 
 ```{R}
 
@@ -256,25 +263,29 @@ points(z_values, f(z_values), col = 'red', pch = 20)
 
 ```
 
-
-<br><br><br><br>
-<br><br><br><br>
----
+<br><br><br><br> <br><br><br><br> ---
 
 ## Question 2
-::: {.callout-tip}
+
+::: callout-tip
 ## 50 points
+
 Logistic regression and interpretation of effect sizes
 :::
 
-For this question we will use the **Titanic** dataset from the Stanford data archive. This dataset contains information about passengers aboard the Titanic and whether or not they survived. 
+For this question we will use the **Titanic** dataset from the Stanford
+data archive. This dataset contains information about passengers aboard
+the Titanic and whether or not they survived.
 
-
----
+------------------------------------------------------------------------
 
 ###### 2.1 (5 points)
 
-Read the data from the following URL as a tibble in R. Preprocess the data such that the variables are of the right data type, e.g., binary variables are encoded as factors, and convert all column names to lower case for consistency. Let's also rename the response variable `Survival` to `y` for convenience.
+Read the data from the following URL as a tibble in R. Preprocess the
+data such that the variables are of the right data type, e.g., binary
+variables are encoded as factors, and convert all column names to lower
+case for consistency. Let's also rename the response variable `Survival`
+to `y` for convenience.
 
 ```{R}
 # Load necessary libraries
@@ -296,11 +307,12 @@ glimpse(df)
 
 ```
 
----
+------------------------------------------------------------------------
 
 ###### 2.2 (5 points)
 
-Visualize the correlation matrix of all numeric columns in `df` using `corrplot()`
+Visualize the correlation matrix of all numeric columns in `df` using
+`corrplot()`
 
 ```{R}
 library(tidyverse)
@@ -324,21 +336,19 @@ cor_matrix <- cor(numeric_cols)
 corrplot(cor_matrix, method = "circle")
 ```
 
-
-
----
+------------------------------------------------------------------------
 
 ###### 2.3 (10 points)
 
-Fit a logistic regression model to predict the probability of surviving the titanic as a function of:
+Fit a logistic regression model to predict the probability of surviving
+the titanic as a function of:
 
-* `pclass`
-* `sex`
-* `age`
-* `fare`
-* `# siblings`
-* `# parents`
-
+-   `pclass`
+-   `sex`
+-   `age`
+-   `fare`
+-   `# siblings`
+-   `# parents`
 
 ```{R}
 # Fit logistic regression model
@@ -352,41 +362,43 @@ full_model <- glm(y ~ Pclass + Sex + Age + Fare + Siblings.Spouses.Aboard + Pare
 summary(full_model)
 ```
 
----
+------------------------------------------------------------------------
 
 ###### 2.4 (30 points)
 
-Provide an interpretation for the slope and intercept terms estimated in `full_model` in terms of the log-odds of survival in the titanic and in terms of the odds-ratio (if the covariate is also categorical).
+Provide an interpretation for the slope and intercept terms estimated in
+`full_model` in terms of the log-odds of survival in the titanic and in
+terms of the odds-ratio (if the covariate is also categorical).
 
-::: {.callout-hint}
+::: callout-hint
 ## 
-Recall the definition of logistic regression from the lecture notes, and also recall how we interpreted the slope in the linear regression model (particularly when the covariate was categorical).
+
+Recall the definition of logistic regression from the lecture notes, and
+also recall how we interpreted the slope in the linear regression model
+(particularly when the covariate was categorical).
 :::
 
-
-<br><br><br><br>
-<br><br><br><br>
----
+<br><br><br><br> <br><br><br><br> ---
 
 ## Question 3
-::: {.callout-tip}
+
+::: callout-tip
 ## 70 points
 
 Variable selection and logistic regression in `torch`
-
 :::
 
-
----
+------------------------------------------------------------------------
 
 ###### 3.1 (15 points)
 
-Complete the following function `overview` which takes in two categorical vectors (`predicted` and `expected`) and outputs:
+Complete the following function `overview` which takes in two
+categorical vectors (`predicted` and `expected`) and outputs:
 
-* The prediction accuracy
-* The prediction error
-* The false positive rate, and
-* The false negative rate
+-   The prediction accuracy
+-   The prediction error
+-   The false positive rate, and
+-   The false negative rate
 
 ```{R}
 overview <- function(predicted, expected) {
@@ -426,13 +438,14 @@ overview <- function(predicted, expected) {
 
 ```
 
-You can check if your function is doing what it's supposed to do by evaluating
+You can check if your function is doing what it's supposed to do by
+evaluating
 
 ```{R}
 overview(df$y, df$y)
 ```
-and making sure that the accuracy is $100\%$ while the errors are $0\%$.
----
+
+## and making sure that the accuracy is $100\%$ while the errors are $0\%$.
 
 ###### 3.2 (5 points)
 
@@ -444,11 +457,12 @@ Display an overview of the key performance metrics of `full_model`
 summary(full_model)
 ```
 
----
+------------------------------------------------------------------------
 
-###### 3.3  (5 points)
+###### 3.3 (5 points)
 
-Using backward-stepwise logistic regression, find a parsimonious altenative to `full_model`, and print its `overview`
+Using backward-stepwise logistic regression, find a parsimonious
+altenative to `full_model`, and print its `overview`
 
 ```{R}
 step_model <- step(full_model, direction = "backward")
@@ -462,11 +476,12 @@ overview(step_predictions, df$y)
 
 ```
 
----
+------------------------------------------------------------------------
 
-###### 3.4  (15 points)
+###### 3.4 (15 points)
 
-Using the `caret` package, setup a **$5$-fold cross-validation** training method using the `caret::trainConrol()` function
+Using the `caret` package, setup a $5$-fold cross-validation training
+method using the `caret::trainConrol()` function
 
 ```{R}
 
@@ -495,9 +510,12 @@ ggplot(lasso_fit, aes(x = log2_lambda, y = Accuracy)) +
 
 ```
 
-Now, using `control`, perform $5$-fold cross validation using `caret::train()` to select the optimal $\lambda$ parameter for LASSO with logistic regression. 
+Now, using `control`, perform $5$-fold cross validation using
+`caret::train()` to select the optimal $\lambda$ parameter for LASSO
+with logistic regression.
 
-Take the search grid for $\lambda$ to be in $\{ 2^{-20}, 2^{-19.5}, 2^{-19}, \dots, 2^{-0.5}, 2^{0} \}$.
+Take the search grid for $\lambda$ to be in
+$\{ 2^{-20}, 2^{-19.5}, 2^{-19}, \dots, 2^{-0.5}, 2^{0} \}$.
 
 ```{R}
 # Insert your code in the ... region
@@ -506,228 +524,280 @@ control <- trainControl(method = "cv", number = 5, classProbs = TRUE, summaryFun
 
 # Define the lambda search grid
 lambda_grid <- 2^seq(-20, 0, by = 0.5)
-tune_grid <- expand.grid(.lambda = lambda_grid, .alpha = 1) # alpha = 1 for LASSO
+tune_grid <- expand.grid(.lambda = lambda_grid, .alpha = 1) 
 
 # Prepare the data
 
-x <- df[, setdiff(names(df), "y")] # All columns except 'y'
-y <- df$y
+x_names<- df[, setdiff(names(df), "y")] # All columns except 'y'
+y_names <- df$y
 
 # Perform 5-fold CV to select the optimal lambda
-lasso_fit <- train(x = x, y = y,
-                   method = "glmnet",
-                   trControl = control,
-                   tuneGrid = tune_grid,
-                   preProcess = c("center", "scale"), # Preprocessing steps
-                   metric = "ROC",
-                   family = "binomial")
+# error atleast one of the class levels is not a valid R variable name
+lasso_fit <- train(x = x_names, y = y_names,
+                  method = "glmnet",
+                  trControl = control,
+                  tuneGrid = tune_grid,
+                  preProcess = c("center", "scale"), # Preprocessing steps
+                  metric = "ROC",
+                  family = "binomial")
 
 plot(lasso_fit)
 ```
-Using the information stored in `lasso_fit$results`, plot the results for  cross-validation accuracy vs. $log_2(\lambda)$. Choose the optimal $\lambda^*$, and report your results for this value of $\lambda^*$.
 
----
+Using the information stored in `lasso_fit$results`, plot the results
+for cross-validation accuracy vs. $log_2(\lambda)$. Choose the optimal
+$\lambda^*$, and report your results for this value of $\lambda^*$.
 
-###### 3.5  (25 points)
+------------------------------------------------------------------------
 
-First, use the `model.matrix()` function to convert the covariates of `df` to a matrix format
+###### 3.5 (25 points)
+
+First, use the `model.matrix()` function to convert the covariates of
+`df` to a matrix format
 
 ```{R}
 covariate_matrix <- model.matrix(full_model)[, -1]
 ```
 
-Now, initialize the covariates $X$ and the response $y$ as `torch` tensors
+Now, initialize the covariates $X$ and the response $y$ as `torch`
+tensors
 
 ```{R}
 library(torch)
-
+ 
 # After creating covariate_matrix 
-X <- torch_tensor(as.matrix(covariate_matrix))
-y <- torch_tensor(as.numeric(df$y), dtype = torch_float32())
-
-logistic <- nn_module(
-  initialize = function() {
-    self$f <- nn_linear(ncol(covariate_matrix), 1)
-    self$g <- nn_sigmoid()
-  },
-  forward = function(x) {
-    x %>% self$f() %>% self$g()
-  }
-)
-
-# Defining the loss function
-Loss <- function(X, y, Fun) {
-  loss <- nn_binary_cross_entropy_with_logits()
-  loss(Fun(X), y)
-}
-
-# gradient descent loop 
-f <- logistic()
-optimizer <- optim_adam(f$parameters)
-
-for (i in 1:n) {
-  optimizer$zero_grad()
-  output <- f(X)
-  loss <- Loss(X, y, f)
-  loss$backward()
-  optimizer$step()
-}
-
-# After optimization
-predicted_probabilities <- f(X) %>% as_array()
-torch_predictions <- ifelse(predicted_probabilities > 0.5, 1, 0)
-
-# Assuming 'overview' is a function you've defined to summarize predictions
-overview(torch_predictions, df$y)
+ X <- torch_tensor(as.matrix(covariate_matrix))
+ y <- torch_tensor(as.numeric(df$y), dtype = torch_float32())
+# 
+ logistic <- nn_module(
+   initialize = function() {
+     self$f <- nn_linear(ncol(covariate_matrix), 1)
+     self$g <- nn_sigmoid()
+   },
+   forward = function(x) {
+     x %>% self$f() %>% self$g()
+   }
+ )
+ 
+ # Defining the loss function
+ Loss <- function(X, y, Fun) {
+   loss <- nn_binary_cross_entropy_with_logits()
+   loss(Fun(X), y)# }
+# 
+# # gradient descent loop 
+ f <- logistic()
+ optimizer <- optim_adam(f$parameters)
+ 
+ for (i in 1:n) {
+   optimizer$zero_grad()
+   output <- f(X)
+   loss <- Loss(X, y, f)
+   loss$backward()
+   optimizer$step()
+ }
+ 
+ # After optimization
+ predicted_probabilities <- f(X) %>% as_array()
+ torch_predictions <- ifelse(predicted_probabilities > 0.5, 1, 0)
+ 
+ torch=overview(torch_predictions, df$y)
+ print(torch)
 
 ```
 
-Using the `torch` library, initialize an `nn_module` which performs logistic regression for this dataset. (Remember that we have 6 different covariates)
+Using the `torch` library, initialize an `nn_module` which performs
+logistic regression for this dataset. (Remember that we have 6 different
+covariates)
 
 ```{R}
-library(torch)
+#library(torch)
 
 # Define the logistic regression model
-logistic <- nn_module(
-  initialize = function(input_size) {
-    # input size
-    self$f <- nn_linear(input_size, 1)
-  },
-  forward = function(x) {
-    # Apply the linear layer
-    x <- self$f(x)
-    # Apply the sigmoid activation function
-    output <- nnf_sigmoid(x)
-    return(output)
-  }
-)
-#example for reference
-input_size <- 20
-model <- logistic(input_size)
-
+ logistic_torch <- nn_module(
+   initialize = function(input_size) {
+     # input size
+     self$f <- nn_linear(input_size, 1)
+   },
+   forward = function(x) {
+     # Apply the linear layer
+     x <- self$f(x)
+     # Apply the sigmoid activation function
+     output <- nnf_sigmoid(x)
+     return(output)
+   }
+ )
+# #example for reference
+ input_size <- 20
+ model_ <- logistic(input_size)
+# 
 x <- torch_randn(c(1, input_size)) 
-output <- model$forward(x)
-
-print(output)
+ output <- model$forward(x)
+ 
+ print(output)
 
 ```
 
-You can verify that your code is right by checking that the output to the following code is a vector of probabilities:
+You can verify that your code is right by checking that the output to
+the following code is a vector of probabilities:
 
 ```{R}
 f(X)
 ```
 
-
-Now, define the loss function `Loss()` which takes in two tensors `X` and `y` and a function `Fun`, and outputs the **Binary cross Entropy loss** between `Fun(X)` and `y`. 
+Now, define the loss function `Loss()` which takes in two tensors `X`
+and `y` and a function `Fun`, and outputs the **Binary cross Entropy
+loss** between `Fun(X)` and `y`.
 
 ```{R}
-Loss <- function(X, y, Fun){
-  predictions <- Fun(X)
-  
-  # Binary Cross-Entropy Loss calculation
-  # -y * log(predictions) - (1 - y) * log(1 - predictions)
-  loss <- -mean(y * log(predictions) + (1 - y) * log(1 - predictions))
-  
-  return(loss)
-}
+# Loss <- function(X, y, Fun){
+#   predictions <- Fun(X)
+#   
+#   # Binary Cross-Entropy Loss calculation
+#   # -y * log(predictions) - (1 - y) * log(1 - predictions)
+#   loss <- -mean(y * log(predictions) + (1 - y) * log(1 - predictions))
+#   
+#   return(loss)
+# }
 ```
 
-Initialize an optimizer using `optim_adam()` and perform $n=1000$ steps of gradient descent in order to fit logistic regression using `torch`.
+Initialize an optimizer using `optim_adam()` and perform $n=1000$ steps
+of gradient descent in order to fit logistic regression using `torch`.
 
 ```{R}
-f <- logistic()
-optimizer <- optim_adam(f$parameters)
-
-for (i in 1:n) {
-  optimizer$zero_grad()
-  output <- f(X)
-  loss <- Loss(X, y, f)
-  loss$backward()
-  optimizer$step()
-}
-
-
-n <- 1000
-# Insert your code for gradient descent here
-
-ogistic <- nn_module(
-  initialize = function() {
-    self$linear <- nn_linear(in_features = num_features, out_features = 1)
-  },
-  forward = function(x) {
-    x %>% self$linear() %>% nnf_sigmoid()
-  }
-)
+#f <- logistic()
+# optimizer <- optim_adam(f$parameters)
+# 
+# for (i in 1:n) {
+#   optimizer$zero_grad()
+#   output <- f(X)
+#   loss <- Loss(X, y, f)
+#   loss$backward()
+#   optimizer$step()
+# }
+# 
+# 
+# n <- 1000
+# # Insert your code for gradient descent here
+# 
+# logistic <- nn_module(
+#   initialize = function() {
+#     self$linear <- nn_linear(in_features = num_features, out_features = 1)
+#   },
+#   forward = function(x) {
+#     x %>% self$linear() %>% nnf_sigmoid()
+#   }
+# )
 
 # Initialize your model
-logistic <- logistic()
+#logistic <- logistic()
 
 # used modeling online and documentation unsure how to do this without gaining error 
 # X <- torch_tensor(as.matrix(X), dtype = torch_float())
  #y <- torch_tensor(as.matrix(y), dtype = torch_float())
 
-optimizer <- optim_adam(model$parameters, lr = 0.01)
-
-loss_function <- nnf_binary_cross_entropy_with_logits
-
-n <- 1000  # Number of gradient descent steps
-
-for (i in 1:n) {
-  optimizer$zero_grad()
-  # Forward pass: Compute predicted y by passing X to the model
-  y_pred <- model(X)
-  
-  # Compute and print loss
-  loss <- loss_function(y_pred, y)
-  if (i %% 100 == 0) {
-    cat("Iteration:", i, "Loss:", as.array(loss), "\n")
-  }
-  # Backward pass: compute gradient of the loss with respect to model parameters
-  loss$backward()
-  # Calling the step function on an Optimizer makes an update to its parameters
-  optimizer$step()
-}
+# optimizer <- optim_adam(model$parameters, lr = 0.01)
+# 
+# loss_function <- nnf_binary_cross_entropy_with_logits
+# 
+# n <- 1000  # Number of gradient descent steps
+# 
+# for (i in 1:n) {
+#   optimizer$zero_grad()
+#   # Forward pass: Compute predicted y by passing X to the model
+#   y_pred <- model(X)
+#   
+#   # Compute and print loss
+#   loss <- loss_function(y_pred, y)
+#   if (i %% 100 == 0) {
+#     cat("Iteration:", i, "Loss:", as.array(loss), "\n")
+#   }
+#   # Backward pass: compute gradient of the loss with respect to model parameters
+#   loss$backward()
+#   # Calling the step function on an Optimizer makes an update to its parameters
+#   optimizer$step()
+# }
 ```
 
-Using the final, optimized parameters of `f`, compute the compute the predicted results on `X`
+Using the final, optimized parameters of `f`, compute the compute the
+predicted results on `X`
 
 ```{R}
-threshold= .5
-predicted_probabilities <- f(X) %>% as_array()
-torch_predictions <- ifelse(predicted_probabilities > threshold, 1, 0)
-
-accuracy <- mean(torch_predictions == df$y)
+ threshold= .5
+ predicted_probabilities <- f(X) %>% as_array()
+ torch_predictions <- ifelse(predicted_probabilities > threshold, 1, 0)
+# 
+# accuracy <- mean(torch_predictions == df$y)
 print(paste("Accuracy:", accuracy))
-
-overview(torch_predictions, df$y)
+# 
+ overview(torch_predictions, df$y)
 ```
 
----
+------------------------------------------------------------------------
 
-###### 3.6  (5 points)
+###### 3.6 (5 points)
 
-Create a summary table of the `overview()` summary statistics for each of the $4$ models we have looked at in this assignment, and comment on their relative strengths and drawbacks. 
+Create a summary table of the `overview()` summary statistics for each
+of the $4$ models we have looked at in this assignment, and comment on
+their relative strengths and drawbacks.
+
+From my knowledge of the 4 models, I will write the strengths and
+drawbacks despite the lack of knowledge due to the model. I used AIC and
+BIC because they fix the data frame issue I was having. More
+specifically," Error in as.data.frame.default(x\[\[i\]\], optional =
+TRUE, stringsAsFactors = stringsAsFactors) : cannot coerce class
+‘c("glm", "lm")’ to a data.frame." I decided to use AIC and BIC to
+understand these models better. They relate to the quality of the model,
+the lower AIC the better the model may be at predicting. Full model has
+more of a risk of overfitting but captures more of the data. Stepwise
+has less of a risk of overfitting, but the predictors have a more
+complex risk with the variable. Torch and the Step have the same values
+which means that it has similar fit. The strengths for torch is that it
+can show the non linear relationships, but sometimes it has less
+interprability.
 
 ```{R}
 
-# Assuming you have variables storing metrics for each model, you can do something like:
+# Error within data frame so it is not working 
+# summary_table <- data.frame(
+#   names = c("Full Model", "Stepwise Model"),
+#   full_model= full_model,
+#   step_model=step_model
+#   
+# )
+# Extract AIC this is to fix the data frame error
+aic_full <- AIC(full_model)
+aic_step <- AIC(step_model)
+#aic_torch<- AIC(torch)
+
+# Extract BIC, which is another criterion for model selection
+bic_full <- BIC(full_model)
+bic_step <- BIC(step_model)
+#bic_torch<- BIC(torch)
+
+
+
+# Compile the metrics into a dataframe
 summary_table <- data.frame(
-  Model = c("Full Model", "Stepwise Model", "LASSO CV Model", "Torch Logistic Regression"),
-  Accuracy = c(full_model, step_model, lasso_fit, logistic)
+  Metric = c("AIC", "BIC"),
+  Full_Model = c(aic_full, bic_full),
+  Step_Model = c(aic_step, bic_step),
+  Torch_model= c(aic_step, bic_step)
 )
 
+# Print the summary table
+print(summary_table)
+
+# overview(full_model)
+# overview(step_model)
+  
+
 ```
 
-:::{.hidden unless-format="pdf"}
+::: {.hidden unless-format="pdf"}
 \pagebreak
 :::
 
-<br><br><br><br>
-<br><br><br><br>
----
-
-
+<br><br><br><br> <br><br><br><br> ---
 
 ::: {.callout-note collapse="true"}
 ## Session Information
